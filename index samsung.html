@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samsung Store</title>
+<link href="https://fonts.googleapis.com/css2?family=SamsungSharpSans:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f5f5f7;color:#1d1d1f;min-height:100vh}
+:root{--blue:#1428A0;--blue-dark:#0f1f8a;--orange:#ff6b35;--bg:#f5f5f7;--card:#fff;--border:#e0e0e0;--text:#1d1d1f;--text2:#6e6e73;--text3:#aaa;--radius:14px;--radius-sm:8px}
+.nav{background:var(--blue);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(20,40,160,0.3)}
+.nav-logo{font-size:22px;font-weight:700;color:#fff;letter-spacing:3px}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-btn{background:rgba(255,255,255,0.15);border:none;color:#fff;padding:7px 16px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:500;transition:background 0.2s}
+.nav-btn:hover{background:rgba(255,255,255,0.28)}
+.cart-btn{position:relative}
+.cart-count{position:absolute;top:-7px;right:-7px;background:var(--orange);color:#fff;border-radius:50%;width:19px;height:19px;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.hero{background:linear-gradient(135deg,#1428A0 0%,#0a1870 60%,#050d40 100%);color:#fff;padding:52px 24px 44px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero h1{font-size:34px;font-weight:600;margin-bottom:8px;letter-spacing:-0.5px}
+.hero p{font-size:16px;opacity:0.75;margin-bottom:24px;letter-spacing:0.5px}
+.search-bar{display:flex;max-width:420px;margin:0 auto;background:#fff;border-radius:28px;overflow:hidden;padding:5px 5px 5px 18px;align-items:center;box-shadow:0 4px 24px rgba(0,0,0,0.18)}
+.search-bar input{flex:1;border:none;outline:none;font-size:14px;background:transparent;color:#1428A0}
+.search-bar button{background:var(--blue);color:#fff;border:none;border-radius:22px;padding:9px 18px;cursor:pointer;font-size:13px;font-weight:500}
+.cats{display:flex;gap:8px;padding:16px 24px;overflow-x:auto;background:#fff;border-bottom:1px solid var(--border);scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cat-btn{background:#f5f5f7;border:1px solid var(--border);padding:7px 18px;border-radius:20px;cursor:pointer;font-size:13px;white-space:nowrap;color:var(--text2);font-weight:400;transition:all 0.2s}
+.cat-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.cat-btn:hover:not(.active){background:#eaecf8;border-color:#1428A0;color:var(--blue)}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px;padding:24px;max-width:1000px;margin:0 auto}
+.product-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:all 0.2s}
+.product-card:hover{border-color:var(--blue);box-shadow:0 6px 24px rgba(20,40,160,0.12);transform:translateY(-3px)}
+.product-img{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:54px;margin-bottom:14px;background:#f5f5f7;border-radius:var(--radius-sm)}
+.product-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.product-sub{font-size:12px;color:var(--text2);margin-bottom:8px}
+.product-price{font-size:17px;font-weight:600;color:var(--blue);margin-bottom:12px}
+.add-btn{width:100%;background:var(--blue);color:#fff;border:none;border-radius:var(--radius-sm);padding:9px;cursor:pointer;font-size:13px;font-weight:500;transition:background 0.2s}
+.add-btn:hover{background:var(--blue-dark)}
+.badge{display:inline-block;background:var(--orange);color:#fff;font-size:10px;padding:2px 9px;border-radius:10px;margin-bottom:7px;font-weight:600;letter-spacing:0.5px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--card);border-radius:var(--radius);padding:30px;width:100%;max-width:440px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.25)}
+.modal h2{font-size:21px;font-weight:600;margin-bottom:20px;color:var(--text)}
+.form-group{margin-bottom:15px}
+.form-group label{font-size:12px;color:var(--text2);display:block;margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
+.form-group input,.form-group select{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:#fff;color:var(--text);outline:none;transition:border 0.2s;font-family:inherit}
+.form-group input:focus,.form-group select:focus{border-color:var(--blue)}
+.btn-primary{width:100%;background:var(--blue);color:#fff;border:none;border-radius:var(--radius-sm);padding:13px;font-size:15px;font-weight:500;cursor:pointer;margin-top:8px;transition:background 0.2s;font-family:inherit}
+.btn-primary:hover{background:var(--blue-dark)}
+.btn-secondary{width:100%;background:transparent;color:var(--text2);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:11px;font-size:14px;cursor:pointer;margin-top:8px;transition:all 0.2s;font-family:inherit}
+.btn-secondary:hover{border-color:var(--blue);color:var(--blue)}
+.close-btn{float:right;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text2);line-height:1;margin:-4px -4px 0 0}
+.cart-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--border)}
+.cart-item-img{font-size:28px;width:50px;height:50px;display:flex;align-items:center;justify-content:center;background:#f5f5f7;border-radius:var(--radius-sm);flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-price{font-size:13px;color:var(--blue);font-weight:500}
+.qty-ctrl{display:flex;align-items:center;gap:8px;margin-top:5px}
+.qty-btn{width:26px;height:26px;border:1.5px solid var(--border);background:#f5f5f7;border-radius:6px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--text);font-weight:500;transition:all 0.2s}
+.qty-btn:hover{border-color:var(--blue);color:var(--blue)}
+.qty-num{font-size:14px;font-weight:600;color:var(--text);min-width:22px;text-align:center}
+.cart-total{display:flex;justify-content:space-between;align-items:center;padding:16px 0 8px;font-size:17px;font-weight:600;color:var(--text);border-top:1.5px solid var(--border);margin-top:4px}
+.payment-methods{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.pay-method{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:11px;text-align:center;cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.2s;font-weight:400}
+.pay-method:hover{border-color:var(--blue);color:var(--blue)}
+.pay-method.selected{border-color:var(--blue);background:#eaecf8;color:var(--blue);font-weight:500}
+.success-icon{font-size:52px;text-align:center;margin:16px 0 8px}
+.tabs{display:flex;gap:2px;margin-bottom:20px;background:#f5f5f7;border-radius:var(--radius-sm);padding:3px}
+.tab{flex:1;padding:9px;text-align:center;border-radius:6px;cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.2s;font-weight:400}
+.tab.active{background:#fff;color:var(--blue);font-weight:600;box-shadow:0 1px 6px rgba(0,0,0,0.08)}
+.user-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.22);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.empty-cart{text-align:center;padding:44px 20px;color:var(--text2)}
+.star{color:#f0a500;font-size:12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rating-row{display:flex;align-items:center;gap:4px;margin-bottom:8px}
+.product-card-inner{height:100%;display:flex;flex-direction:column}
+.add-btn-wrap{margin-top:auto}
+footer{text-align:center;padding:32px 20px;background:#fff;border-top:1px solid var(--border);color:var(--text2);font-size:13px;margin-top:20px}
+footer span{color:var(--blue);font-weight:500}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">SAMSUNG</div>
+  <div class="nav-right">
+    <span id="nav-user-btn">
+      <button class="nav-btn" onclick="showModal('login')">Sign in</button>
+    </span>
+    <button class="nav-btn cart-btn" onclick="showModal('cart')">
+      🛒 Cart <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Experience the next big thing</h1>
+  <p>Galaxy AI &nbsp;·&nbsp; Displays &nbsp;·&nbsp; Wearables &nbsp;·&nbsp; Appliances</p>
+  <div class="search-bar">
+    <input type="text" id="search-input" placeholder="Search Samsung products..." oninput="filterProducts()">
+    <button onclick="filterProducts()">Search</button>
+  </div>
+</div>
+
+<div class="cats" id="cat-bar">
+  <button class="cat-btn active" onclick="filterCat('all',this)">All Products</button>
+  <button class="cat-btn" onclick="filterCat('phone',this)">Smartphones</button>
+  <button class="cat-btn" onclick="filterCat('tablet',this)">Tablets</button>
+  <button class="cat-btn" onclick="filterCat('watch',this)">Wearables</button>
+  <button class="cat-btn" onclick="filterCat('tv',this)">TVs</button>
+  <button class="cat-btn" onclick="filterCat('laptop',this)">Laptops</button>
+  <button class="cat-btn" onclick="filterCat('audio',this)">Audio</button>
+</div>
+
+<div class="products" id="products-grid"></div>
+
+<footer>
+  &copy; 2025 <span>Samsung Electronics</span> &nbsp;·&nbsp; All rights reserved &nbsp;·&nbsp; Privacy Policy &nbsp;·&nbsp; Terms of Service
+</footer>
+
+<div id="modal-overlay" class="modal-bg" onclick="closeModalBg(event)">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+const products=[
+  {id:1,name:'Galaxy S25 Ultra',sub:'6.9" · 200MP · 5000mAh',price:129999,cat:'phone',emoji:'📱',badge:'New',rating:4.9,reviews:2841},
+  {id:2,name:'Galaxy S25+',sub:'6.7" · 50MP · 4900mAh',price:99999,cat:'phone',emoji:'📱',rating:4.8,reviews:1932},
+  {id:3,name:'Galaxy S25',sub:'6.2" · 50MP · 4000mAh',price:79999,cat:'phone',emoji:'📱',rating:4.7,reviews:3104},
+  {id:4,name:'Galaxy Z Fold 6',sub:'Foldable · 7.6" inner display',price:164999,cat:'phone',emoji:'📲',badge:'Hot',rating:4.8,reviews:987},
+  {id:5,name:'Galaxy Z Flip 6',sub:'Compact flip · 6.7"',price:109999,cat:'phone',emoji:'📲',rating:4.6,reviews:1204},
+  {id:6,name:'Galaxy A55 5G',sub:'6.6" · 50MP · 5000mAh',price:38999,cat:'phone',emoji:'📱',rating:4.5,reviews:5621},
+  {id:7,name:'Galaxy Tab S10 Ultra',sub:'14.6" AMOLED · 256GB',price:119999,cat:'tablet',emoji:'💻',badge:'New',rating:4.8,reviews:743},
+  {id:8,name:'Galaxy Tab S10+',sub:'12.4" AMOLED · S Pen included',price:89999,cat:'tablet',emoji:'💻',rating:4.7,reviews:892},
+  {id:9,name:'Galaxy Tab S10 FE',sub:'10.9" · 8000mAh',price:49999,cat:'tablet',emoji:'💻',rating:4.5,reviews:1241},
+  {id:10,name:'Galaxy Watch 7',sub:'Health · GPS · ECG · Body comp',price:29999,cat:'watch',emoji:'⌚',badge:'New',rating:4.7,reviews:2103},
+  {id:11,name:'Galaxy Watch Ultra',sub:'Titanium · 60hr battery',price:69999,cat:'watch',emoji:'⌚',rating:4.8,reviews:654},
+  {id:12,name:'Galaxy Ring',sub:'Health tracker · Titanium · IP68',price:26999,cat:'watch',emoji:'💍',badge:'New',rating:4.5,reviews:872},
+  {id:13,name:'Galaxy Buds3 Pro',sub:'ANC · Hi-Fi audio · 360 audio',price:19999,cat:'audio',emoji:'🎧',badge:'New',rating:4.7,reviews:3401},
+  {id:14,name:'Galaxy Buds3',sub:'Open-type · 30hr total',price:13999,cat:'audio',emoji:'🎧',rating:4.5,reviews:2108},
+  {id:15,name:'Galaxy Book4 Pro 360',sub:'Intel Core Ultra · 16" AMOLED',price:179999,cat:'laptop',emoji:'💻',rating:4.7,reviews:421},
+  {id:16,name:'Galaxy Book4 Pro',sub:'Intel Core Ultra · 14" AMOLED',price:149999,cat:'laptop',emoji:'💻',rating:4.6,reviews:389},
+  {id:17,name:'Neo QLED 4K 65"',sub:'Quantum Matrix · 144Hz · AI',price:189999,cat:'tv',emoji:'📺',badge:'Hot',rating:4.7,reviews:882},
+  {id:18,name:'The Frame TV 55"',sub:'Art mode · QLED · Matte display',price:129999,cat:'tv',emoji:'📺',rating:4.8,reviews:1103},
+];
+
+let cart=[];
+let user=null;
+let currentCat='all';
+let searchQ='';
+let paymentMethod='card';
+
+function fmt(n){return'₹'+n.toLocaleString('en-IN')}
+
+function filterCat(cat,btn){
+  currentCat=cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+}
+
+function filterProducts(){
+  searchQ=document.getElementById('search-input').value.toLowerCase();
+  renderProducts();
+}
+
+function stars(r){
+  return '★'.repeat(Math.round(r))+'☆'.repeat(5-Math.round(r));
+}
+
+function renderProducts(){
+  const grid=document.getElementById('products-grid');
+  const filtered=products.filter(p=>{
+    const matchCat=currentCat==='all'||p.cat===currentCat;
+    const matchSearch=!searchQ||p.name.toLowerCase().includes(searchQ)||p.sub.toLowerCase().includes(searchQ);
+    return matchCat&&matchSearch;
+  });
+  if(filtered.length===0){
+    grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#6e6e73"><div style="font-size:48px;margin-bottom:12px">🔍</div><p style="font-size:18px;font-weight:500">No products found</p><p style="font-size:14px;margin-top:6px">Try a different search or category</p></div>`;
+    return;
+  }
+  grid.innerHTML=filtered.map(p=>`
+    <div class="product-card" onclick="showProduct(${p.id})">
+      ${p.badge?`<span class="badge">${p.badge}</span>`:'<div style="height:22px"></div>'}
+      <div class="product-img">${p.emoji}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-sub">${p.sub}</div>
+      <div class="rating-row">
+        <span class="star" style="font-size:11px;color:#f0a500">${stars(p.rating)}</span>
+        <span style="font-size:11px;color:#6e6e73">${p.rating} (${p.reviews.toLocaleString()})</span>
+      </div>
+      <div class="product-price">${fmt(p.price)}</div>
+      <button class="add-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to cart</button>
+    </div>
+  `).join('');
+}
+
+function showProduct(id){
+  const p=products.find(x=>x.id===id);
+  setModal(`
+    <button class="close-btn" onclick="closeModal()">×</button>
+    <div style="font-size:72px;text-align:center;margin-bottom:16px;background:#f5f5f7;padding:24px;border-radius:12px">${p.emoji}</div>
+    ${p.badge?`<span class="badge">${p.badge}</span>`:''}
+    <h2 style="margin:8px 0 4px">${p.name}</h2>
+    <p style="color:#6e6e73;font-size:14px;margin-bottom:10px">${p.sub}</p>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px">
+      <span style="color:#f0a500;font-size:14px">${stars(p.rating)}</span>
+      <span style="font-size:13px;color:#6e6e73">${p.rating} · ${p.reviews.toLocaleString()} reviews</span>
+    </div>
+    <div style="font-size:26px;font-weight:600;color:#1428A0;margin-bottom:16px">${fmt(p.price)}</div>
+    <div style="background:#f0f3ff;border-radius:10px;padding:13px 16px;margin-bottom:18px;font-size:13px;color:#1428A0">
+      ✓ Free delivery &nbsp;&nbsp;✓ 1-year warranty &nbsp;&nbsp;✓ Easy 10-day returns
+    </div>
+    <button class="btn-primary" onclick="addToCart(${p.id});closeModal()">Add to cart — ${fmt(p.price)}</button>
+    <button class="btn-secondary" onclick="closeModal()">Continue shopping</button>
+  `);
+}
+
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  const ex=cart.find(c=>c.id===id);
+  if(ex)ex.qty++;
+  else cart.push({...p,qty:1});
+  updateCartCount();
+  const btn=event&&event.target;
+  if(btn&&btn.classList.contains('add-btn')){
+    const orig=btn.textContent;
+    btn.textContent='✓ Added!';
+    btn.style.background='#0a8a4a';
+    setTimeout(()=>{btn.textContent=orig;btn.style.background='';},1200);
+  }
+}
+
+function updateCartCount(){
+  const total=cart.reduce((s,c)=>s+c.qty,0);
+  document.getElementById('cart-count').textContent=total;
+}
+
+function showModal(type){
+  if(type==='login')renderLogin();
+  else if(type==='cart')renderCart();
+}
+
+function renderLogin(){
+  if(user){
+    setModal(`
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <h2>My Account</h2>
+      <div style="text-align:center;padding:20px 0">
+        <div style="width:68px;height:68px;background:#1428A0;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:600">${user.name[0].toUpperCase()}</div>
+        <div style="font-size:19px;font-weight:600;color:#1d1d1f">${user.name}</div>
+        <div style="font-size:14px;color:#6e6e73;margin-top:4px">${user.email}</div>
+      </div>
+      <div style="border:1.5px solid #e0e0e0;border-radius:12px;overflow:hidden;margin-bottom:16px">
+        ${['My Orders','Wishlist','Samsung Rewards','Address Book','Help & Support'].map((item,i)=>`<div style="padding:13px 18px;${i<4?'border-bottom:1px solid #e0e0e0;':''}font-size:14px;color:#1d1d1f;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background 0.15s" onmouseover="this.style.background='#f5f5f7'" onmouseout="this.style.background=''">${item}<span style="color:#aaa;font-size:18px">›</span></div>`).join('')}
+      </div>
+      <button class="btn-secondary" onclick="logout()">Sign out</button>
+    `);
+    return;
+  }
+  let tab='signin';
+  const html=()=>`
+    <button class="close-btn" onclick="closeModal()">×</button>
+    <h2>Welcome to Samsung</h2>
+    <div class="tabs">
+      <div class="tab ${tab==='signin'?'active':''}" onclick="switchLoginTab('signin')">Sign in</div>
+      <div class="tab ${tab==='signup'?'active':''}" onclick="switchLoginTab('signup')">Create account</div>
+    </div>
+    ${tab==='signin'?`
+      <div class="form-group"><label>Email</label><input type="email" id="li-email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="li-pass" placeholder="••••••••" autocomplete="current-password"></div>
+      <button class="btn-primary" onclick="doLogin()">Sign in</button>
+      <p style="text-align:center;font-size:13px;color:#1428A0;margin-top:14px;cursor:pointer;font-weight:500">Forgot password?</p>
+    `:`
+      <div class="form-group"><label>Full name</label><input type="text" id="su-name" placeholder="Your full name" autocomplete="name"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="su-email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" id="su-phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="su-pass" placeholder="Min 8 characters" autocomplete="new-password"></div>
+      <button class="btn-primary" onclick="doSignup()">Create account</button>
+    `}
+    <p style="text-align:center;font-size:12px;color:#aaa;margin-top:16px">🔒 Secured by Samsung Account</p>
+  `;
+  window.switchLoginTab=(t)=>{tab=t;document.getElementById('modal-content').innerHTML=html()};
+  setModal(html());
+}
+
+function doLogin(){
+  const email=document.getElementById('li-email').value.trim();
+  const pass=document.getElementById('li-pass').value;
+  if(!email||!pass){alert('Please fill all fields');return;}
+  if(!/\S+@\S+\.\S+/.test(email)){alert('Please enter a valid email');return;}
+  user={name:email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),email};
+  updateNavUser();
+  setModal(`
+    <div class="success-icon">✅</div>
+    <h2 style="text-align:center">Welcome back!</h2>
+    <p style="text-align:center;color:#6e6e73;font-size:14px;margin:8px 0 22px">Signed in as <strong>${user.name}</strong></p>
+    <button class="btn-primary" onclick="closeModal()">Start shopping</button>
+  `);
+}
+
+function doSignup(){
+  const name=document.getElementById('su-name').value.trim();
+  const email=document.getElementById('su-email').value.trim();
+  const pass=document.getElementById('su-pass').value;
+  if(!name||!email||!pass){alert('Please fill all required fields');return;}
+  if(pass.length<8){alert('Password must be at least 8 characters');return;}
+  user={name,email};
+  updateNavUser();
+  setModal(`
+    <div class="success-icon">🎉</div>
+    <h2 style="text-align:center">Account created!</h2>
+    <p style="text-align:center;color:#6e6e73;font-size:14px;margin:8px 0 22px">Welcome to Samsung, <strong>${name}</strong>!</p>
+    <div style="background:#f0f3ff;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#1428A0;text-align:center">You've earned 500 Samsung Reward Points!</div>
+    <button class="btn-primary" onclick="closeModal()">Start shopping</button>
+  `);
+}
+
+function logout(){user=null;updateNavUser();closeModal();}
+
+function updateNavUser(){
+  const btn=document.getElementById('nav-user-btn');
+  if(user){
+    btn.innerHTML=`<div class="user-avatar" onclick="showModal('login')" title="${user.name}">${user.name[0].toUpperCase()}</div>`;
+  }else{
+    btn.innerHTML=`<button class="nav-btn" onclick="showModal('login')">Sign in</button>`;
+  }
+}
+
+function renderCart(){
+  if(cart.length===0){
+    setModal(`
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <h2>My Cart</h2>
+      <div class="empty-cart">
+        <div style="font-size:52px;margin-bottom:14px">🛒</div>
+        <p style="font-size:17px;font-weight:600;color:#1d1d1f;margin-bottom:8px">Your cart is empty</p>
+        <p style="font-size:14px">Explore our latest Samsung products</p>
+        <button class="btn-primary" style="margin-top:22px" onclick="closeModal()">Browse products</button>
+      </div>
+    `);
+    return;
+  }
+  const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const count=cart.reduce((s,c)=>s+c.qty,0);
+  const items=cart.map(c=>`
+    <div class="cart-item">
+      <div class="cart-item-img">${c.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${c.name}</div>
+        <div class="cart-item-price">${fmt(c.price)}</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(${c.id},-1)">−</button>
+          <span class="qty-num">${c.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${c.id},1)">+</button>
+          <button onclick="removeItem(${c.id})" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:12px;color:#aaa;font-family:inherit">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  setModal(`
+    <button class="close-btn" onclick="closeModal()">×</button>
+    <h2>My Cart (${count} item${count>1?'s':''})</h2>
+    ${items}
+    <div class="cart-total"><span>Total</span><span style="color:#1428A0">${fmt(total)}</span></div>
+    <div style="font-size:12px;color:#6e6e73;margin-bottom:14px;text-align:center">Free delivery · Secure payment</div>
+    <button class="btn-primary" onclick="showCheckout()">Proceed to checkout →</button>
+    <button class="btn-secondary" onclick="closeModal()">Continue shopping</button>
+  `);
+}
+
+function changeQty(id,delta){
+  const item=cart.find(c=>c.id===id);
+  if(!item)return;
+  item.qty+=delta;
+  if(item.qty<=0)cart=cart.filter(c=>c.id!==id);
+  updateCartCount();
+  renderCart();
+}
+
+function removeItem(id){
+  cart=cart.filter(c=>c.id!==id);
+  updateCartCount();
+  renderCart();
+}
+
+function showCheckout(){
+  const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const count=cart.reduce((s,c)=>s+c.qty,0);
+  setModal(`
+    <button class="close-btn" onclick="closeModal()">×</button>
+    <h2>Checkout</h2>
+    <div style="background:#f0f3ff;border-radius:10px;padding:10px 16px;font-size:13px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center">
+      <span style="color:#6e6e73">${count} item${count>1?'s':''}</span>
+      <span style="font-size:16px;font-weight:600;color:#1428A0">${fmt(total)}</span>
+    </div>
+    ${!user?`<div style="background:#fff8e1;border:1px solid #f0a500;border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:16px;color:#7a5800">💡 <strong>Sign in</strong> to earn Samsung Rewards points on this purchase</div>`:''}
+    <div class="form-group"><label>Full name</label><input type="text" id="co-name" placeholder="Recipient name" value="${user?user.name:''}"></div>
+    <div class="form-group"><label>Phone</label><input type="tel" id="co-phone" placeholder="+91 XXXXX XXXXX"></div>
+    <div class="form-group"><label>Delivery address</label><input type="text" id="co-addr" placeholder="House no, Street, Area, Landmark"></div>
+    <div class="row2">
+      <div class="form-group"><label>City</label><input type="text" id="co-city" placeholder="City" value="${user?'Jamnagar':''}"></div>
+      <div class="form-group"><label>Pincode</label><input type="text" id="co-pin" placeholder="6-digit PIN" maxlength="6"></div>
+    </div>
+    <div class="form-group"><label>State</label>
+      <select id="co-state">
+        <option>Gujarat</option><option>Maharashtra</option><option>Delhi</option><option>Karnataka</option><option>Tamil Nadu</option><option>Uttar Pradesh</option><option>Rajasthan</option><option>West Bengal</option><option>Telangana</option><option>Andhra Pradesh</option><option>Kerala</option><option>Madhya Pradesh</option><option>Other</option>
+      </select>
+    </div>
+    <p style="font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:10px">Payment method</p>
+    <div class="payment-methods" id="pay-methods">
+      <div class="pay-method selected" onclick="selectPay('card',this)">💳 Card</div>
+      <div class="pay-method" onclick="selectPay('upi',this)">📲 UPI</div>
+      <div class="pay-method" onclick="selectPay('emi',this)">🏦 EMI</div>
+      <div class="pay-method" onclick="selectPay('cod',this)">💵 Cash on delivery</div>
+    </div>
+    <div id="pay-extra"></div>
+    <button class="btn-primary" onclick="placeOrder()">Place order — ${fmt(total)}</button>
+    <button class="btn-secondary" onclick="renderCart()">← Back to cart</button>
+  `);
+  selectPayInit();
+}
+
+function selectPayInit(){
+  const extra=document.getElementById('pay-extra');
+  if(extra)extra.innerHTML=`
+    <div class="form-group"><label>Card number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"></div>
+    <div class="row2">
+      <div class="form-group"><label>Expiry</label><input type="text" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)"></div>
+      <div class="form-group"><label>CVV</label><input type="password" placeholder="•••" maxlength="3"></div>
+    </div>
+    <div class="form-group"><label>Name on card</label><input type="text" placeholder="Cardholder name"></div>
+  `;
+}
+
+function formatCard(el){
+  let v=el.value.replace(/\D/g,'').substring(0,16);
+  el.value=v.replace(/(.{4})/g,'$1 ').trim();
+}
+function formatExpiry(el){
+  let v=el.value.replace(/\D/g,'');
+  if(v.length>=2)v=v.substring(0,2)+'/'+v.substring(2,4);
+  el.value=v;
+}
+
+function selectPay(method,el){
+  paymentMethod=method;
+  document.querySelectorAll('.pay-method').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');
+  const extra=document.getElementById('pay-extra');
+  if(method==='card'){
+    extra.innerHTML=`
+      <div class="form-group"><label>Card number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"></div>
+      <div class="row2">
+        <div class="form-group"><label>Expiry</label><input type="text" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)"></div>
+        <div class="form-group"><label>CVV</label><input type="password" placeholder="•••" maxlength="3"></div>
+      </div>
+      <div class="form-group"><label>Name on card</label><input type="text" placeholder="Cardholder name"></div>
+    `;
+  }else if(method==='upi'){
+    extra.innerHTML=`<div class="form-group"><label>UPI ID</label><input type="text" placeholder="yourname@upi or phone@paytm"></div>`;
+  }else if(method==='emi'){
+    extra.innerHTML=`
+      <div class="form-group"><label>Bank</label><select><option>HDFC Bank</option><option>ICICI Bank</option><option>SBI</option><option>Axis Bank</option><option>Kotak Mahindra</option></select></div>
+      <div class="form-group"><label>EMI tenure</label><select><option>3 months (0% interest)</option><option>6 months (0% interest)</option><option>12 months (1.5%/month)</option><option>24 months (1.5%/month)</option></select></div>
+    `;
+  }else{
+    extra.innerHTML=`<div style="background:#f5f5f7;padding:11px 14px;border-radius:10px;font-size:13px;color:#6e6e73;margin-bottom:14px">Pay ₹50 extra as COD convenience fee. Pay when your order arrives.</div>`;
+  }
+}
+
+function placeOrder(){
+  const name=document.getElementById('co-name')?.value.trim();
+  const addr=document.getElementById('co-addr')?.value.trim();
+  const phone=document.getElementById('co-phone')?.value.trim();
+  if(!name||!addr||!phone){alert('Please fill all delivery details');return;}
+  const orderId='SMG'+Math.random().toString(36).substring(2,8).toUpperCase();
+  const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const count=cart.reduce((s,c)=>s+c.qty,0);
+  cart=[];
+  updateCartCount();
+  const deliveryDate=new Date();
+  deliveryDate.setDate(deliveryDate.getDate()+Math.floor(Math.random()*3)+3);
+  const dateStr=deliveryDate.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+  setModal(`
+    <div class="success-icon">🎉</div>
+    <h2 style="text-align:center;color:#1d1d1f">Order confirmed!</h2>
+    <p style="text-align:center;color:#6e6e73;font-size:14px;margin:4px 0 18px">Thank you for shopping with Samsung</p>
+    <div style="background:#f0f3ff;border-radius:12px;padding:16px 18px;margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+        <span style="font-size:12px;color:#6e6e73;text-transform:uppercase;letter-spacing:0.5px">Order ID</span>
+        <span style="font-size:14px;font-weight:600;color:#1428A0">${orderId}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+        <span style="font-size:12px;color:#6e6e73;text-transform:uppercase;letter-spacing:0.5px">Amount</span>
+        <span style="font-size:14px;font-weight:600;color:#1d1d1f">${fmt(total)}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+        <span style="font-size:12px;color:#6e6e73;text-transform:uppercase;letter-spacing:0.5px">Items</span>
+        <span style="font-size:14px;font-weight:600;color:#1d1d1f">${count}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between">
+        <span style="font-size:12px;color:#6e6e73;text-transform:uppercase;letter-spacing:0.5px">Est. delivery</span>
+        <span style="font-size:14px;font-weight:600;color:#0a8a4a">${dateStr}</span>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:13px;color:#aaa;margin-bottom:18px">Track your order anytime in My Account</p>
+    <button class="btn-primary" onclick="closeModal()">Continue shopping</button>
+  `);
+}
+
+function setModal(html){
+  document.getElementById('modal-content').innerHTML=html;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function closeModalBg(e){
+  if(e.target===document.getElementById('modal-overlay'))closeModal();
+}
+
+renderProducts();
+</script>
+</body>
+</html>
