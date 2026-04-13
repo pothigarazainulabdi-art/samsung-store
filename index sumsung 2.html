@@ -1,0 +1,699 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--s:#1428A0;--sd:#0D1E80;--sl:#E6EEFF;--sg:#f8f9ff}
+.app{font-family:var(--font-sans);background:var(--color-background-tertiary)}
+.nav{background:var(--s);display:flex;align-items:center;justify-content:space-between;padding:0 14px;height:52px;gap:6px}
+.logo{color:#fff;font-size:16px;font-weight:500;letter-spacing:3px;white-space:nowrap}
+.nav-cats{display:flex;gap:1px}
+.nc{color:rgba(255,255,255,.75);font-size:10.5px;padding:5px 7px;border-radius:5px;cursor:pointer;border:none;background:transparent;white-space:nowrap}
+.nc:hover,.nc.on{color:#fff;background:rgba(255,255,255,.18)}
+.nav-r{display:flex;align-items:center;gap:5px}
+.nb{color:#fff;font-size:10px;padding:5px 9px;border-radius:14px;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:transparent;white-space:nowrap;position:relative}
+.nb:hover{background:rgba(255,255,255,.2)}
+.bdot{position:absolute;top:-4px;right:-4px;background:#E24B4A;color:#fff;font-size:9px;border-radius:8px;padding:1px 4px;font-weight:500;display:none}
+.av{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.22);color:#fff;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1.5px solid rgba(255,255,255,.45);flex-shrink:0}
+.hero{background:var(--s);color:#fff;padding:0}
+.hero-inner{display:flex;align-items:center;justify-content:space-between;padding:20px 16px;gap:16px}
+.hero-txt h1{font-size:22px;font-weight:500;margin-bottom:6px;line-height:1.2}
+.hero-txt p{font-size:12px;opacity:.7;margin-bottom:14px}
+.hbtns{display:flex;gap:7px;flex-wrap:wrap}
+.hb1{background:#fff;color:var(--s);border:none;padding:7px 18px;border-radius:18px;font-size:11px;font-weight:500;cursor:pointer}
+.hb2{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5);padding:7px 14px;border-radius:18px;font-size:11px;cursor:pointer}
+.hero-img{font-size:80px;flex-shrink:0;line-height:1}
+.promo-banner{background:#0D1E80;color:#fff;text-align:center;padding:8px;font-size:11px;display:flex;align-items:center;justify-content:center;gap:8px}
+.promo-tag{background:rgba(255,255,255,.2);padding:2px 8px;border-radius:10px;font-size:10px;font-weight:500}
+.toolbar{display:flex;align-items:center;gap:7px;padding:10px 14px;flex-wrap:wrap}
+.sw{flex:1;min-width:150px;position:relative}
+.sw input{width:100%;padding:7px 28px 7px 28px;border-radius:18px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:11px;color:var(--color-text-primary)}
+.sw input:focus{outline:2px solid var(--s);border-color:transparent}
+.si{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none}
+.sc{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:12px;cursor:pointer;color:var(--color-text-secondary)}
+.srtsel{padding:6px 9px;border-radius:16px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:10.5px;color:var(--color-text-primary);cursor:pointer}
+.pf{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--color-text-secondary)}
+.pf input{width:64px;padding:6px 7px;border-radius:14px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:10.5px;color:var(--color-text-primary)}
+.filters{display:flex;gap:5px;padding:0 14px 10px;flex-wrap:wrap}
+.fp{padding:5px 12px;border-radius:14px;font-size:10.5px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer}
+.fp.on,.fp:hover{background:var(--s);color:#fff;border-color:var(--s)}
+.sh{padding:0 14px 8px;font-size:14px;font-weight:500;color:var(--color-text-primary);display:flex;align-items:center;justify-content:space-between}
+.cnt{font-size:11px;color:var(--color-text-secondary);font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;padding:0 14px 24px}
+.card{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);overflow:hidden;cursor:pointer;transition:transform .12s,border-color .12s;position:relative}
+.card:hover{transform:translateY(-2px);border-color:var(--color-border-secondary)}
+.wb{position:absolute;top:7px;right:7px;width:24px;height:24px;border-radius:50%;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;z-index:2}
+.wb.on{background:#FCEBEB;border-color:#F09595}
+.cimg{height:130px;display:flex;align-items:center;justify-content:center;background:var(--color-background-secondary);overflow:hidden}
+.cimg img{width:100%;height:100%;object-fit:contain;padding:10px}
+.cimg .emoji-fallback{font-size:44px}
+.cbody{padding:9px}
+.bdg{display:inline-block;font-size:9px;font-weight:500;padding:2px 6px;border-radius:8px;margin-bottom:4px}
+.b-new{background:#E6EEFF;color:#0C447C}
+.b-sale{background:#FCEBEB;color:#A32D2D}
+.b-hot{background:#FAEEDA;color:#633806}
+.b-featured{background:#E1F5EE;color:#085041}
+.cname{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.csub{font-size:10px;color:var(--color-text-secondary);margin-bottom:6px;line-height:1.35}
+.prow{display:flex;align-items:baseline;gap:5px;margin-bottom:7px}
+.pr{font-size:14px;font-weight:500;color:var(--s)}
+.op{font-size:10px;color:var(--color-text-tertiary);text-decoration:line-through}
+.savepct{font-size:9px;background:#FCEBEB;color:#A32D2D;padding:1px 5px;border-radius:6px}
+.abtn{width:100%;padding:6px;background:var(--s);color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer}
+.abtn:hover{background:var(--sd)}
+.abtn.done{background:#3B6D11}
+.stars{font-size:10px;color:#BA7517;margin-bottom:3px}
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-start;justify-content:center;padding-top:20px;z-index:50}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);width:94%;max-width:430px;max-height:88vh;overflow-y:auto}
+.mh{padding:12px 15px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary)}
+.mh h3{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.mx{background:none;border:none;font-size:19px;color:var(--color-text-secondary);cursor:pointer;line-height:1}
+.mb{padding:14px}
+.mf{padding:10px 14px;border-top:0.5px solid var(--color-border-tertiary);display:flex;gap:7px}
+.mp{flex:1;padding:9px;background:var(--s);color:#fff;border:none;border-radius:7px;font-size:11px;cursor:pointer}
+.mp:hover{background:var(--sd)}
+.ms{flex:1;padding:9px;background:var(--color-background-secondary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);border-radius:7px;font-size:11px;cursor:pointer}
+.fl{display:block;font-size:11px;color:var(--color-text-secondary);margin-bottom:3px}
+.fi{width:100%;padding:8px 10px;border-radius:7px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:11px;color:var(--color-text-primary);margin-bottom:9px}
+.fi:focus{outline:2px solid var(--s);border-color:transparent}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sub{width:100%;padding:9px;background:var(--s);color:#fff;border:none;border-radius:7px;font-size:11px;cursor:pointer;margin-top:2px}
+.sub:hover{background:var(--sd)}
+.ci{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.ci-ic{width:36px;height:36px;object-fit:contain;font-size:20px;display:flex;align-items:center;justify-content:center;background:var(--color-background-secondary);border-radius:6px;flex-shrink:0;overflow:hidden}
+.ci-ic img{width:100%;height:100%;object-fit:contain;padding:2px}
+.ci-inf{flex:1;min-width:0}
+.ci-n{font-size:11px;font-weight:500;color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-p{font-size:10px;color:var(--s)}
+.qc{display:flex;align-items:center;gap:3px;flex-shrink:0}
+.qb{width:20px;height:20px;border-radius:50%;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;color:var(--color-text-primary)}
+.rm{width:18px;height:18px;border-radius:50%;border:0.5px solid #F09595;background:#FCEBEB;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;color:#A32D2D;margin-left:3px}
+.spr{display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px}
+.spr:last-child{border:none}
+.sk{color:var(--color-text-secondary)}
+.sv{font-weight:500;color:var(--color-text-primary)}
+.steps{display:flex;gap:4px;margin-bottom:14px}
+.step{flex:1;height:3px;border-radius:2px;background:var(--color-border-tertiary)}
+.step.on{background:var(--s)}
+.toast{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:var(--s);color:#fff;padding:7px 15px;border-radius:14px;font-size:11px;white-space:nowrap;z-index:200;pointer-events:none}
+.tabb{display:flex;gap:5px;margin-bottom:12px}
+.tb{padding:5px 12px;border-radius:12px;font-size:11px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer}
+.tb.on{background:var(--s);color:#fff;border-color:var(--s)}
+.pi{font-size:11px;padding:5px 8px;border-radius:5px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);cursor:pointer;color:var(--color-text-secondary)}
+.pi.on{background:var(--sl);border-color:var(--s);color:var(--s)}
+.coupon-row{display:flex;gap:6px;margin-bottom:10px}
+.coupon-row input{flex:1;padding:7px 10px;border-radius:7px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:11px;color:var(--color-text-primary)}
+.coupon-row button{padding:7px 12px;background:var(--s);color:#fff;border:none;border-radius:7px;font-size:11px;cursor:pointer}
+.color-swatch{width:22px;height:22px;border-radius:50%;border:2px solid transparent;cursor:pointer;display:inline-block}
+.color-swatch.sel{border-color:var(--s)}
+.qty-sel{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.qty-sel button{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--color-text-primary)}
+</style>
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Samsung Mobile Store — full store with images, promo codes, colors, wishlist, cart, login and checkout</h2>
+
+<div class="app" id="app" style="position:relative;min-height:700px">
+
+<nav class="nav">
+  <div class="logo">SAMSUNG</div>
+  <div class="nav-cats">
+    <button class="nc on" onclick="setCat('all',this)">All</button>
+    <button class="nc" onclick="setCat('phones',this)">Phones</button>
+    <button class="nc" onclick="setCat('tablets',this)">Tablets</button>
+    <button class="nc" onclick="setCat('wearables',this)">Wearables</button>
+    <button class="nc" onclick="setCat('accessories',this)">Accessories</button>
+    <button class="nc" onclick="showWL()">♡ Wishlist</button>
+  </div>
+  <div class="nav-r">
+    <button class="nb" onclick="showCart()">🛒 <span id="cn">0</span><span id="cdot" class="bdot">0</span></button>
+    <div class="av" id="av" onclick="showLogin()">?</div>
+  </div>
+</nav>
+
+<div class="promo-banner">
+  <span class="promo-tag">DEAL</span>
+  Free shipping on orders over $499 · Use code <strong>GALAXY10</strong> for 10% off · <strong>SAVE20</strong> for $20 off
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-txt">
+      <h1>Galaxy.<br>Beyond ordinary.</h1>
+      <p>The latest phones, tablets, wearables & accessories — all in one place.</p>
+      <div class="hbtns">
+        <button class="hb1" onclick="setCat('phones',null)">Shop S25 Series</button>
+        <button class="hb2" onclick="setCat('sale',null)">View deals</button>
+        <button class="hb2" onclick="setCat('new',null)">New arrivals</button>
+      </div>
+    </div>
+    <div class="hero-img">📱</div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="sw">
+    <span class="si">🔍</span>
+    <input type="text" id="srch" placeholder="Search Samsung products..." oninput="render()"/>
+    <span class="sc" onclick="document.getElementById('srch').value='';render()">✕</span>
+  </div>
+  <select class="srtsel" id="srt" onchange="render()">
+    <option value="def">Sort: Default</option>
+    <option value="pl">Price: Low → High</option>
+    <option value="ph">Price: High → Low</option>
+    <option value="rat">Top rated</option>
+    <option value="name">Name A–Z</option>
+  </select>
+  <div class="pf">
+    <span>$</span>
+    <input type="number" id="pmin" placeholder="Min" oninput="render()"/>
+    <span>–</span>
+    <input type="number" id="pmax" placeholder="Max" oninput="render()"/>
+  </div>
+</div>
+
+<div class="filters">
+  <div class="fp on" id="fp-all" onclick="setCat('all',null)">All products</div>
+  <div class="fp" id="fp-phones" onclick="setCat('phones',null)">Phones</div>
+  <div class="fp" id="fp-tablets" onclick="setCat('tablets',null)">Tablets</div>
+  <div class="fp" id="fp-wearables" onclick="setCat('wearables',null)">Wearables</div>
+  <div class="fp" id="fp-accessories" onclick="setCat('accessories',null)">Accessories</div>
+  <div class="fp" id="fp-sale" onclick="setCat('sale',null)">🔥 On sale</div>
+  <div class="fp" id="fp-new" onclick="setCat('new',null)">✨ New arrivals</div>
+  <div class="fp" id="fp-under500" onclick="setCat('under500',null)">Under $500</div>
+</div>
+
+<div class="sh"><span id="shead">All products</span><span class="cnt" id="pcount"></span></div>
+<div class="grid" id="grid"></div>
+<div id="mroot"></div>
+<div id="troot"></div>
+</div>
+
+<script>
+const IMGS={
+  1:'https://images.samsung.com/is/image/samsung/p6pim/in/2501/gallery/in-galaxy-s25-ultra-s938-sm-s938bztgins-thumb-543315064',
+  2:'https://images.samsung.com/is/image/samsung/p6pim/in/2501/gallery/in-galaxy-s25-plus-s926-sm-s926bzkgins-thumb-543315019',
+  3:'https://images.samsung.com/is/image/samsung/p6pim/in/2501/gallery/in-galaxy-s25-s931-sm-s931bzagins-thumb-543314924',
+  4:'https://images.samsung.com/is/image/samsung/p6pim/global/2407/gallery/global-galaxy-z-fold6-f956-sm-f956bzkaxfe-thumb-542349585',
+  5:'https://images.samsung.com/is/image/samsung/p6pim/in/2407/gallery/in-galaxy-z-flip6-f741-sm-f741blbgins-thumb-542349630',
+  6:'https://images.samsung.com/is/image/samsung/p6pim/in/2403/gallery/in-galaxy-a55-a556-sm-a556ezkgins-thumb-539434516',
+  7:'https://images.samsung.com/is/image/samsung/p6pim/in/2403/gallery/in-galaxy-a35-a356-sm-a356ezkgins-thumb-539434540',
+  8:'https://images.samsung.com/is/image/samsung/p6pim/in/2402/gallery/in-galaxy-a15-5g-a156-sm-a156bzkgins-thumb-539123568',
+  9:'https://images.samsung.com/is/image/samsung/p6pim/in/2410/gallery/in-galaxy-tab-s10-ultra-x920-sm-x920nzaainu-thumb-542969618',
+  10:'https://images.samsung.com/is/image/samsung/p6pim/in/2410/gallery/in-galaxy-tab-s10-plus-x820-sm-x820nzaainu-thumb-542969612',
+  11:'https://images.samsung.com/is/image/samsung/p6pim/in/2410/gallery/in-galaxy-tab-s10-x710-sm-x710nzaainu-thumb-542969601',
+  12:'https://images.samsung.com/is/image/samsung/p6pim/in/2410/gallery/in-galaxy-tab-s10-fe-x520-sm-x520nzaainu-thumb-543060278',
+  13:'https://images.samsung.com/is/image/samsung/p6pim/in/2309/gallery/in-galaxy-tab-a9-plus-x210-sm-x210nzaainu-thumb-537556819',
+  14:'https://images.samsung.com/is/image/samsung/p6pim/in/2407/gallery/in-galaxy-watch-ultra-x510-sm-l705fzaainu-thumb-542350073',
+  15:'https://images.samsung.com/is/image/samsung/p6pim/in/2407/gallery/in-galaxy-watch7-l305-sm-l305fzaainu-thumb-542349680',
+  16:'https://images.samsung.com/is/image/samsung/p6pim/in/2306/gallery/in-galaxy-watch6-r930-sm-r930nzkains-thumb-536990720',
+  17:'https://images.samsung.com/is/image/samsung/p6pim/in/2407/gallery/in-galaxy-buds3-pro-r630-sm-r630nzaains-thumb-542349813',
+  18:'https://images.samsung.com/is/image/samsung/p6pim/in/2407/gallery/in-galaxy-buds3-r530-sm-r530nzaains-thumb-542349837',
+  19:'https://images.samsung.com/is/image/samsung/p6pim/in/2310/gallery/in-galaxy-buds-fe-r400-sm-r400nzaains-thumb-537694474',
+  20:'https://images.samsung.com/is/image/samsung/p6pim/in/2407/gallery/in-galaxy-ring-r950-sm-r950nzaainu-thumb-542349851',
+};
+
+const EMOJIS={1:'📱',2:'📱',3:'📱',4:'📲',5:'📲',6:'📱',7:'📱',8:'📱',9:'💻',10:'💻',11:'💻',12:'💻',13:'💻',14:'⌚',15:'⌚',16:'⌚',17:'🎧',18:'🎧',19:'🎧',20:'💍',21:'🔌',22:'🔋',23:'🏷️',24:'✏️',25:'🛡️',26:'🖥️'};
+
+const P=[
+  {id:1,name:'Galaxy S25 Ultra',cat:'phones',badge:'new',price:1299,old:null,sub:'6.9" QHD+ · 200MP · S Pen · AI',rating:4.9,reviews:1842,colors:['#2C2C2A','#E8E4DC','#8B9CAD','#1428A0'],specs:[['Display','6.9" QHD+ 120Hz'],['Chip','Snapdragon 8 Elite'],['Camera','200MP Quad'],['Battery','5000mAh'],['RAM','12GB'],['Storage','256GB–1TB']]},
+  {id:2,name:'Galaxy S25+',cat:'phones',badge:'new',price:999,old:null,sub:'6.7" AMOLED · 50MP · Slim design',rating:4.8,reviews:1230,colors:['#2C2C2A','#E8E4DC','#1428A0'],specs:[['Display','6.7" FHD+ 120Hz'],['Chip','Snapdragon 8 Elite'],['Camera','50MP Triple'],['Battery','4900mAh'],['RAM','12GB'],['Storage','256–512GB']]},
+  {id:3,name:'Galaxy S25',cat:'phones',badge:'hot',price:799,old:null,sub:'6.2" AMOLED · 50MP · Compact',rating:4.7,reviews:980,colors:['#2C2C2A','#E8E4DC','#B4B2A9','#1428A0'],specs:[['Display','6.2" FHD+'],['Chip','Snapdragon 8 Elite'],['Camera','50MP Triple'],['Battery','4000mAh'],['RAM','12GB'],['Storage','128–512GB']]},
+  {id:4,name:'Galaxy Z Fold 6',cat:'phones',badge:'hot',price:1799,old:1899,sub:'7.6" foldable · S Pen · DeX mode',rating:4.7,reviews:654,colors:['#2C2C2A','#E8E4DC','#1428A0'],specs:[['Main Display','7.6" QXGA+'],['Cover','6.3" HD+'],['Chip','Snapdragon 8 Gen 3'],['Camera','50MP Triple'],['RAM','12GB'],['Battery','4400mAh']]},
+  {id:5,name:'Galaxy Z Flip 6',cat:'phones',badge:'sale',price:899,old:1099,sub:'6.7" flip · FlexCam · AI camera',rating:4.6,reviews:720,colors:['#2C2C2A','#FAEEDA','#97C459','#D4537E'],specs:[['Display','6.7" FHD+'],['Cover','3.4" Super AMOLED'],['Chip','Snapdragon 8 Gen 3'],['Camera','50MP Dual'],['RAM','12GB'],['Battery','4000mAh']]},
+  {id:6,name:'Galaxy A55 5G',cat:'phones',badge:'sale',price:449,old:549,sub:'6.6" AMOLED · 50MP OIS · 5000mAh',rating:4.5,reviews:1560,colors:['#2C2C2A','#B4B2A9','#1428A0','#D4537E'],specs:[['Display','6.6" FHD+'],['Chip','Exynos 1480'],['Camera','50MP OIS'],['Battery','5000mAh'],['RAM','8GB'],['Storage','128–256GB']]},
+  {id:7,name:'Galaxy A35 5G',cat:'phones',badge:null,price:329,old:null,sub:'6.6" AMOLED · 48MP · Gorilla Glass',rating:4.4,reviews:890,colors:['#2C2C2A','#B4B2A9','#1428A0'],specs:[['Display','6.6" FHD+'],['Chip','Exynos 1380'],['Camera','48MP Triple'],['Battery','5000mAh'],['RAM','6GB'],['Storage','128–256GB']]},
+  {id:8,name:'Galaxy A15 5G',cat:'phones',badge:'sale',price:199,old:249,sub:'6.5" LCD · 50MP · Budget 5G pick',rating:4.2,reviews:2100,colors:['#2C2C2A','#1428A0','#3B6D11'],specs:[['Display','6.5" FHD+'],['Chip','Dimensity 6100+'],['Camera','50MP Triple'],['Battery','5000mAh'],['RAM','4–6GB'],['Storage','128GB']]},
+  {id:9,name:'Galaxy Tab S10 Ultra',cat:'tablets',badge:'new',price:1199,old:null,sub:'14.6" AMOLED · S Pen · DeX',rating:4.9,reviews:430,colors:['#2C2C2A','#B4B2A9'],specs:[['Display','14.6" 2960×1848'],['Chip','Snapdragon 8 Gen 3'],['Battery','11200mAh'],['RAM','12–16GB'],['Storage','256GB–1TB'],['S Pen','Included']]},
+  {id:10,name:'Galaxy Tab S10+',cat:'tablets',badge:'new',price:999,old:null,sub:'12.4" AMOLED · S Pen · DeX',rating:4.8,reviews:310,colors:['#2C2C2A','#B4B2A9'],specs:[['Display','12.4" 2800×1752'],['Chip','Snapdragon 8 Gen 3'],['Battery','10090mAh'],['RAM','12GB'],['Storage','256–512GB'],['S Pen','Included']]},
+  {id:11,name:'Galaxy Tab S10',cat:'tablets',badge:'new',price:799,old:null,sub:'11" AMOLED · S Pen · 8580mAh',rating:4.7,reviews:280,colors:['#2C2C2A','#B4B2A9'],specs:[['Display','11" 2560×1600'],['Chip','Snapdragon 8 Gen 3'],['Battery','8580mAh'],['RAM','8–12GB'],['Storage','128–256GB'],['S Pen','Included']]},
+  {id:12,name:'Galaxy Tab S10 FE',cat:'tablets',badge:'sale',price:549,old:649,sub:'10.9" LCD · S Pen · Fan edition',rating:4.5,reviews:520,colors:['#2C2C2A','#B4B2A9','#1428A0'],specs:[['Display','10.9" 2304×1440'],['Chip','Exynos 1580'],['Battery','8000mAh'],['RAM','6–8GB'],['Storage','128–256GB'],['S Pen','Included']]},
+  {id:13,name:'Galaxy Tab A9+',cat:'tablets',badge:null,price:279,old:null,sub:'11" LCD · 7040mAh · Budget pick',rating:4.3,reviews:760,colors:['#2C2C2A','#B4B2A9'],specs:[['Display','11" FHD+'],['Chip','Snapdragon 695'],['Battery','7040mAh'],['RAM','4–8GB'],['Storage','64–128GB'],['S Pen','Not included']]},
+  {id:14,name:'Galaxy Watch Ultra',cat:'wearables',badge:'new',price:649,old:null,sub:'47mm titanium · ECG · 100m water',rating:4.8,reviews:340,colors:['#B4B2A9','#2C2C2A','#fff'],specs:[['Size','47mm'],['Display','1.5" AMOLED'],['Battery','590mAh'],['Health','ECG, BP, SpO2'],['Water','100m'],['OS','Wear OS 5']]},
+  {id:15,name:'Galaxy Watch 7',cat:'wearables',badge:'hot',price:299,old:null,sub:'40/44mm · BioActive · AI health',rating:4.7,reviews:820,colors:['#2C2C2A','#97C459','#D4537E','#B4B2A9'],specs:[['Sizes','40mm / 44mm'],['Display','AMOLED'],['Battery','300–425mAh'],['Health','ECG, BP, SpO2'],['OS','Wear OS 5'],['GPS','Yes']]},
+  {id:16,name:'Galaxy Watch 6',cat:'wearables',badge:'sale',price:199,old:279,sub:'40/44mm · Sleep tracking · NFC',rating:4.5,reviews:1100,colors:['#2C2C2A','#B4B2A9','#1428A0'],specs:[['Sizes','40mm / 44mm'],['Display','AMOLED'],['Battery','300–425mAh'],['Health','BIA, ECG, SpO2'],['OS','Wear OS 4'],['NFC','Yes']]},
+  {id:17,name:'Galaxy Buds3 Pro',cat:'wearables',badge:'new',price:249,old:null,sub:'Intelligent ANC · 360° audio · 6-mic',rating:4.8,reviews:610,colors:['#B4B2A9','#2C2C2A'],specs:[['ANC','Intelligent ANC'],['Battery','6hr + 24hr'],['Codec','SSC, AAC, LC3'],['Drivers','11mm + 6.1mm'],['Water','IPX7'],['Mics','6-mic']]},
+  {id:18,name:'Galaxy Buds3',cat:'wearables',badge:'hot',price:149,old:null,sub:'ANC · Blade design · 26hr total',rating:4.5,reviews:780,colors:['#B4B2A9','#2C2C2A'],specs:[['ANC','Yes'],['Battery','5hr + 26hr'],['Driver','10.5mm'],['Water','IPX7'],['Codec','AAC, LC3'],['Fit','Open']]},
+  {id:19,name:'Galaxy Buds FE',cat:'wearables',badge:'sale',price:79,old:99,sub:'ANC · 30hr total · Wing tip',rating:4.3,reviews:940,colors:['#2C2C2A','#B4B2A9','#1428A0'],specs:[['ANC','Yes'],['Battery','5.5hr + 30hr'],['Driver','11mm'],['Water','IPX2'],['Codec','AAC, SBC'],['Fit','Wing-tip']]},
+  {id:20,name:'Galaxy Ring',cat:'wearables',badge:'hot',price:399,old:null,sub:'Titanium · 7-day battery · Health ring',rating:4.6,reviews:420,colors:['#2C2C2A','#B4B2A9','#EF9F27'],specs:[['Material','Grade 5 Titanium'],['Battery','7 days'],['Sensors','PPG + Accelerometer'],['Water','10ATM'],['Sizes','5–13'],['Compat','Galaxy AI']]},
+  {id:21,name:'25W Super Fast Charger',cat:'accessories',badge:null,price:29,old:null,sub:'USB-C PD · All Galaxy devices',rating:4.7,reviews:3200,colors:['#2C2C2A'],specs:[['Power','25W'],['Type','USB-C PD'],['Cable','Not included'],['Compat','Galaxy S/A/Z/Tab'],['Cert','Samsung'],['Size','Compact']]},
+  {id:22,name:'45W Wireless Charger Duo',cat:'accessories',badge:'hot',price:59,old:null,sub:'15W pad + watch cradle · Built-in fan',rating:4.6,reviews:680,colors:['#2C2C2A'],specs:[['Pad','15W'],['Watch','5W'],['Input','USB-C'],['Compat','Galaxy S/Z/Watch/Buds'],['Fan','Built-in'],['Cert','Samsung']]},
+  {id:23,name:'Galaxy SmartTag2',cat:'accessories',badge:'sale',price:19,old:29,sub:'BT 5.3 · 6-month battery · IP67',rating:4.5,reviews:1540,colors:['#2C2C2A','#B4B2A9','#1428A0','#E24B4A'],specs:[['Connectivity','BT 5.3'],['Battery','6 months'],['Water','IP67'],['Range','~120m'],['Compat','Android'],['Find','SmartThings']]},
+  {id:24,name:'S Pen Pro',cat:'accessories',badge:'featured',price:99,old:null,sub:'BT gestures · 0.7mm · 4096 levels',rating:4.7,reviews:430,colors:['#2C2C2A'],specs:[['Tip','0.7mm'],['Pressure','4096 levels'],['Bluetooth','Yes'],['Tilt','Yes'],['Compat','Z Fold / Tab S'],['Battery','Built-in']]},
+  {id:25,name:'Slim Clear Case S25 Ultra',cat:'accessories',badge:null,price:39,old:null,sub:'MIL-STD · Magsafe · Crystal clear',rating:4.4,reviews:820,colors:['#E6F1FB','#E1F5EE','#FAEEDA'],specs:[['Compat','Galaxy S25 Ultra'],['Material','TPU + PC'],['Drop','MIL-STD-810'],['Magsafe','Yes'],['Style','Clear'],['Weight','28g']]},
+  {id:26,name:'Galaxy SmartMonitor M8',cat:'accessories',badge:'new',price:699,old:null,sub:'32" 4K · Smart Hub · USB-C 65W',rating:4.8,reviews:290,colors:['#E8E4DC','#2C2C2A'],specs:[['Size','32"'],['Resolution','4K UHD'],['Panel','VA'],['USB-C','65W'],['Smart','Tizen OS'],['HDR','HDR10+']]},
+];
+
+const COUPONS={GALAXY10:{type:'pct',val:10,label:'10% off'},SAVE20:{type:'flat',val:20,label:'$20 off'},NEWUSER:{type:'pct',val:15,label:'15% off for new users'},SAMSUNG5:{type:'flat',val:5,label:'$5 off'}};
+
+let cart=[],wishlist=[],user=null,curCat='all',appliedCoupon=null;
+
+function imgEl(id,cls){
+  const url=IMGS[id];
+  const em=EMOJIS[id]||'📦';
+  if(url)return`<img src="${url}" class="${cls||''}" onerror="this.style.display='none';this.nextSibling.style.display='flex'" loading="lazy"/><span class="emoji-fallback" style="display:none;font-size:44px">${em}</span>`;
+  return`<span class="emoji-fallback" style="font-size:44px">${em}</span>`;
+}
+
+function setCat(c,btn){
+  curCat=c;
+  document.querySelectorAll('.nc').forEach(b=>b.classList.remove('on'));
+  if(btn&&btn.classList.contains('nc'))btn.classList.add('on');
+  document.querySelectorAll('.fp').forEach(b=>b.classList.remove('on'));
+  const fp=document.getElementById('fp-'+c);if(fp)fp.classList.add('on');
+  const t={all:'All products',phones:'Galaxy phones',tablets:'Galaxy tablets',wearables:'Wearables',accessories:'Accessories',sale:'On sale',new:'New arrivals',under500:'Under $500'};
+  document.getElementById('shead').textContent=t[c]||'All products';
+  render();
+}
+
+function getList(){
+  const q=(document.getElementById('srch').value||'').toLowerCase();
+  const srt=document.getElementById('srt').value;
+  const pmin=parseFloat(document.getElementById('pmin').value)||0;
+  const pmax=parseFloat(document.getElementById('pmax').value)||Infinity;
+  let list=P.filter(p=>{
+    if(curCat==='all')return true;
+    if(curCat==='sale')return p.old!==null;
+    if(curCat==='new')return p.badge==='new';
+    if(curCat==='under500')return p.price<500;
+    return p.cat===curCat;
+  }).filter(p=>p.price>=pmin&&p.price<=pmax)
+    .filter(p=>!q||p.name.toLowerCase().includes(q)||p.sub.toLowerCase().includes(q));
+  if(srt==='pl')list=[...list].sort((a,b)=>a.price-b.price);
+  else if(srt==='ph')list=[...list].sort((a,b)=>b.price-a.price);
+  else if(srt==='rat')list=[...list].sort((a,b)=>b.rating-a.rating);
+  else if(srt==='name')list=[...list].sort((a,b)=>a.name.localeCompare(b.name));
+  return list;
+}
+
+function render(){
+  const list=getList();
+  document.getElementById('pcount').textContent=list.length+' item'+(list.length!==1?'s':'');
+  if(!list.length){document.getElementById('grid').innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--color-text-secondary);font-size:13px">No products found. Try adjusting your filters.</div>`;return;}
+  document.getElementById('grid').innerHTML=list.map(p=>{
+    const inC=cart.some(c=>c.id===p.id);
+    const inW=wishlist.includes(p.id);
+    const bdg=p.badge?`<span class="bdg b-${p.badge}">${p.badge.toUpperCase()}</span><br>`:'';
+    const op=p.old?`<span class="op">$${p.old}</span><span class="savepct">-${Math.round((1-p.price/p.old)*100)}%</span>`:'';
+    const strs='★'.repeat(Math.round(p.rating))+'☆'.repeat(5-Math.round(p.rating));
+    return`<div class="card" onclick="detail(${p.id})">
+      <div class="wb${inW?' on':''}" onclick="event.stopPropagation();toggleW(${p.id},this)">${inW?'♥':'♡'}</div>
+      <div class="cimg">${imgEl(p.id)}</div>
+      <div class="cbody">
+        ${bdg}
+        <div class="stars">${strs} <span style="color:var(--color-text-tertiary);font-size:9px">(${p.reviews.toLocaleString()})</span></div>
+        <div class="cname">${p.name}</div>
+        <div class="csub">${p.sub}</div>
+        <div class="prow"><span class="pr">$${p.price}</span>${op}</div>
+        <button class="abtn${inC?' done':''}" onclick="event.stopPropagation();addCart(${p.id},this)">${inC?'✓ In cart':'Add to cart'}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleW(id,btn){
+  const idx=wishlist.indexOf(id);
+  if(idx>-1){wishlist.splice(idx,1);btn.classList.remove('on');btn.textContent='♡';toast('Removed from wishlist');}
+  else{wishlist.push(id);btn.classList.add('on');btn.textContent='♥';toast('Saved to wishlist');}
+}
+
+function addCart(id,btn,qty){
+  const p=P.find(x=>x.id===id);
+  const ex=cart.find(c=>c.id===id);
+  const q=qty||1;
+  if(ex)ex.qty+=q;else cart.push({...p,qty:q,selColor:p.colors?p.colors[0]:null});
+  updCN();
+  if(btn){btn.textContent='✓ In cart';btn.classList.add('done');}
+  toast(p.name+' added to cart');
+}
+
+function updCN(){
+  const n=cart.reduce((a,c)=>a+c.qty,0);
+  document.getElementById('cn').textContent=n;
+  const d=document.getElementById('cdot');
+  d.textContent=n;d.style.display=n?'':'none';
+}
+
+function toast(msg){
+  const r=document.getElementById('troot');
+  r.innerHTML=`<div class="toast">${msg}</div>`;
+  setTimeout(()=>r.innerHTML='',2200);
+}
+
+function modal(html){document.getElementById('mroot').innerHTML=`<div class="overlay" onclick="if(event.target===this)closeM()">${html}</div>`;}
+function closeM(){document.getElementById('mroot').innerHTML='';}
+
+let detailQty=1;
+function detail(id){
+  const p=P.find(x=>x.id===id);
+  const op=p.old?`<span class="op" style="font-size:11px;margin-left:6px">$${p.old}</span><span class="savepct" style="margin-left:4px">-${Math.round((1-p.price/p.old)*100)}%</span>`:'';
+  const bdg=p.badge?`<span class="bdg b-${p.badge}">${p.badge.toUpperCase()}</span> `:'';
+  const specs=p.specs.map(s=>`<div class="spr"><span class="sk">${s[0]}</span><span class="sv">${s[1]}</span></div>`).join('');
+  const strs='★'.repeat(Math.round(p.rating))+'☆'.repeat(5-Math.round(p.rating));
+  const inW=wishlist.includes(p.id);
+  const colors=p.colors?p.colors.map((c,i)=>`<span class="color-swatch${i===0?' sel':''}" style="background:${c};border-color:${i===0?'var(--s)':'transparent'}" onclick="selColor(this,'${c}')" title="${c}"></span>`).join(''):'';
+  detailQty=1;
+  modal(`<div class="modal">
+    <div class="mh"><h3>${p.name}</h3><button class="mx" onclick="closeM()">×</button></div>
+    <div class="mb">
+      <div style="height:180px;display:flex;align-items:center;justify-content:center;background:var(--color-background-secondary);border-radius:8px;margin-bottom:12px;overflow:hidden">${imgEl(p.id,'detail-img')}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div>${bdg}<span style="font-size:10px;color:#BA7517">${strs}</span> <span style="font-size:10px;color:var(--color-text-secondary)">${p.rating} (${p.reviews.toLocaleString()})</span></div>
+        <button style="font-size:11px;padding:4px 10px;background:${inW?'#FCEBEB':'var(--color-background-secondary)'};color:${inW?'#A32D2D':'var(--color-text-secondary)'};border:0.5px solid ${inW?'#F09595':'var(--color-border-secondary)'};border-radius:12px;cursor:pointer" id="wbtn-${p.id}" onclick="toggleW(${p.id},this);this.textContent=wishlist.includes(${p.id})?'♥ Saved':'♡ Wishlist';this.style.background=wishlist.includes(${p.id})?'#FCEBEB':'var(--color-background-secondary)';this.style.color=wishlist.includes(${p.id})?'#A32D2D':'var(--color-text-secondary)';">${inW?'♥ Saved':'♡ Wishlist'}</button>
+      </div>
+      <div style="font-size:18px;font-weight:500;color:var(--s);margin-bottom:4px">$${p.price}${op}</div>
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:10px">${p.sub}</div>
+      ${colors?`<div style="margin-bottom:10px"><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:6px">Color</div><div style="display:flex;gap:6px">${colors}</div></div>`:''}
+      <div class="qty-sel">
+        <span style="font-size:11px;color:var(--color-text-secondary)">Qty</span>
+        <button onclick="if(detailQty>1)detailQty--;document.getElementById('dqty').textContent=detailQty">−</button>
+        <span id="dqty" style="font-size:13px;font-weight:500;min-width:20px;text-align:center">1</span>
+        <button onclick="detailQty++;document.getElementById('dqty').textContent=detailQty">+</button>
+      </div>
+      <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:4px">Specifications</div>
+      ${specs}
+      <div style="margin-top:10px;padding:8px 10px;background:var(--color-background-secondary);border-radius:7px;font-size:10px;color:var(--color-text-secondary);display:flex;justify-content:space-between">
+        <span>✓ Free returns</span><span>✓ 2yr warranty</span><span>✓ Official Samsung</span>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="mp" onclick="addCart(${p.id},null,detailQty);closeM()">Add ${detailQty} to cart</button>
+      <button class="ms" onclick="addCart(${p.id},null,detailQty);showCart()">Buy now</button>
+    </div>
+  </div>`);
+}
+
+function selColor(el,c){
+  document.querySelectorAll('.color-swatch').forEach(s=>{s.classList.remove('sel');s.style.borderColor='transparent';});
+  el.classList.add('sel');el.style.borderColor='var(--s)';
+}
+
+function showWL(){
+  if(!wishlist.length){toast('Your wishlist is empty — tap ♡ on any product');return;}
+  const items=wishlist.map(id=>{const p=P.find(x=>x.id===id);return`<div class="ci">
+    <div class="ci-ic">${imgEl(p.id,'wl-img')}</div>
+    <div class="ci-inf"><div class="ci-n">${p.name}</div><div class="ci-p">$${p.price}</div></div>
+    <button style="font-size:10px;padding:5px 8px;background:var(--s);color:#fff;border:none;border-radius:5px;cursor:pointer;flex-shrink:0" onclick="addCart(${p.id});render()">+ Cart</button>
+    <div class="rm" onclick="wishlist=wishlist.filter(x=>x!==${id});render();showWL()" title="Remove">✕</div>
+  </div>`;}).join('');
+  modal(`<div class="modal">
+    <div class="mh"><h3>Wishlist (${wishlist.length})</h3><button class="mx" onclick="closeM()">×</button></div>
+    <div class="mb" style="padding:0 14px">${items}</div>
+    <div class="mf"><button class="mp" onclick="wishlist.forEach(id=>addCart(id));render();toast('All added to cart!');closeM()">Add all to cart</button><button class="ms" onclick="closeM()">Close</button></div>
+  </div>`);
+}
+
+function showCart(){
+  if(!cart.length){toast('Your cart is empty');return;}
+  const items=cart.map(c=>`<div class="ci">
+    <div class="ci-ic">${imgEl(c.id,'cart-img')}</div>
+    <div class="ci-inf"><div class="ci-n">${c.name}</div><div class="ci-p">$${c.price} × ${c.qty} = $${(c.price*c.qty).toLocaleString()}</div></div>
+    <div class="qc">
+      <div class="qb" onclick="chQ(${c.id},-1)">−</div>
+      <span style="font-size:11px;font-weight:500;min-width:14px;text-align:center">${c.qty}</span>
+      <div class="qb" onclick="chQ(${c.id},1)">+</div>
+      <div class="rm" onclick="cart=cart.filter(x=>x.id!==${c.id});updCN();render();showCart()">✕</div>
+    </div>
+  </div>`).join('');
+  const sub=cart.reduce((a,c)=>a+c.price*c.qty,0);
+  const ship=sub>499?0:15;
+  let disc=0;
+  if(appliedCoupon){
+    const cp=COUPONS[appliedCoupon];
+    if(cp.type==='pct')disc=Math.round(sub*cp.val/100);
+    else disc=Math.min(cp.val,sub);
+  }
+  const total=sub+ship-disc;
+  modal(`<div class="modal">
+    <div class="mh"><h3>Cart (${cart.reduce((a,c)=>a+c.qty,0)} items)</h3><button class="mx" onclick="closeM()">×</button></div>
+    <div class="mb" style="padding:0 14px">${items}</div>
+    <div class="mb" style="margin:0 14px">
+      <div class="coupon-row">
+        <input id="cpinput" placeholder="Promo code (try GALAXY10)" value="${appliedCoupon||''}" style="text-transform:uppercase"/>
+        <button onclick="applyCoupon()">Apply</button>
+      </div>
+      ${appliedCoupon?`<div style="font-size:10px;color:#3B6D11;margin-bottom:8px">✓ Code applied: ${COUPONS[appliedCoupon].label} <span style="cursor:pointer;color:#A32D2D" onclick="appliedCoupon=null;showCart()">Remove</span></div>`:''}
+      <div style="background:var(--color-background-secondary);border-radius:7px;padding:9px 11px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Subtotal</span><span>$${sub.toLocaleString()}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Shipping</span><span style="color:${ship===0?'#3B6D11':'var(--color-text-primary)'}">${ship===0?'Free':'$'+ship}</span></div>
+        ${disc>0?`<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span style="color:#3B6D11">Discount (${appliedCoupon})</span><span style="color:#3B6D11">−$${disc}</span></div>`:''}
+        <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;border-top:0.5px solid var(--color-border-tertiary);padding-top:7px;margin-top:5px"><span>Total</span><span style="color:var(--s)">$${total.toLocaleString()}</span></div>
+      </div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin-top:6px;text-align:center">${sub<=499?'Add $'+(500-sub)+' more for free shipping':'🎉 You qualify for free shipping!'}</div>
+    </div>
+    <div class="mf" style="margin-top:10px">
+      <button class="mp" onclick="startCheckout()">Checkout</button>
+      <button class="ms" onclick="cart=[];appliedCoupon=null;updCN();render();closeM();toast('Cart cleared')">Clear</button>
+    </div>
+  </div>`);
+}
+
+function applyCoupon(){
+  const code=(document.getElementById('cpinput').value||'').trim().toUpperCase();
+  if(COUPONS[code]){appliedCoupon=code;toast('Promo code applied: '+COUPONS[code].label);showCart();}
+  else{toast('Invalid code. Try GALAXY10 or SAVE20');}
+}
+
+function chQ(id,d){
+  const i=cart.find(c=>c.id===id);
+  if(!i)return;
+  i.qty=Math.max(0,i.qty+d);
+  if(i.qty===0)cart=cart.filter(c=>c.id!==id);
+  updCN();render();showCart();
+}
+
+function startCheckout(){if(!user){showLogin(true);return;}showShipping();}
+
+function showLogin(fromCO){
+  modal(`<div class="modal">
+    <div class="mh"><h3>Samsung account</h3><button class="mx" onclick="closeM()">×</button></div>
+    <div class="mb">
+      <div class="tabb">
+        <button class="tb on" id="tb-si" onclick="swTab('si')">Sign in</button>
+        <button class="tb" id="tb-reg" onclick="swTab('reg')">Register</button>
+      </div>
+      <div id="si-f">
+        <label class="fl">Email</label><input class="fi" id="lem" type="email" placeholder="you@example.com"/>
+        <label class="fl">Password</label><input class="fi" id="lpw" type="password" placeholder="••••••••"/>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <label style="font-size:10px;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px"><input type="checkbox" style="width:12px;height:12px"/> Remember me</label>
+          <span style="font-size:10px;color:var(--s);cursor:pointer">Forgot password?</span>
+        </div>
+        <button class="sub" onclick="doLogin(${!!fromCO})">Sign in</button>
+        <div style="text-align:center;margin-top:10px;font-size:10px;color:var(--color-text-secondary)">Or sign in with</div>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button style="flex:1;padding:7px;border-radius:7px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:11px;cursor:pointer;color:var(--color-text-primary)" onclick="socialLogin('Google',${!!fromCO})">🔵 Google</button>
+          <button style="flex:1;padding:7px;border-radius:7px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:11px;cursor:pointer;color:var(--color-text-primary)" onclick="socialLogin('Apple',${!!fromCO})">🍎 Apple</button>
+        </div>
+      </div>
+      <div id="reg-f" style="display:none">
+        <div class="r2">
+          <div><label class="fl">First name</label><input class="fi" id="rfn" placeholder="Alex"/></div>
+          <div><label class="fl">Last name</label><input class="fi" id="rln" placeholder="Kim"/></div>
+        </div>
+        <label class="fl">Email</label><input class="fi" id="rem" type="email" placeholder="you@example.com"/>
+        <label class="fl">Password</label><input class="fi" id="rpw" type="password" placeholder="Min 6 characters"/>
+        <label class="fl">Phone (optional)</label><input class="fi" id="rph" type="tel" placeholder="+1 555 000 0000"/>
+        <label style="font-size:10px;color:var(--color-text-secondary);display:flex;align-items:center;gap:5px;margin-bottom:10px"><input type="checkbox" checked style="width:12px;height:12px"/> I agree to Samsung's Terms & Privacy Policy</label>
+        <button class="sub" onclick="doReg(${!!fromCO})">Create account</button>
+      </div>
+    </div>
+  </div>`);
+}
+
+function swTab(t){
+  ['si','reg'].forEach(x=>{document.getElementById('tb-'+x).classList.toggle('on',x===t);document.getElementById(x+'-f').style.display=x===t?'':'none';});
+}
+
+function doLogin(fromCO){
+  const e=document.getElementById('lem').value,p=document.getElementById('lpw').value;
+  if(!e||!p){toast('Fill all fields');return;}
+  if(p.length<6){toast('Password needs 6+ chars');return;}
+  user={email:e,name:e.split('@')[0]};setAv();toast('Welcome back, '+user.name+'!');closeM();
+  if(fromCO)setTimeout(showShipping,300);
+}
+
+function doReg(fromCO){
+  const fn=(document.getElementById('rfn').value||'').trim();
+  const ln=(document.getElementById('rln').value||'').trim();
+  const em=document.getElementById('rem').value,pw=document.getElementById('rpw').value;
+  if(!fn||!ln||!em||!pw){toast('Fill all required fields');return;}
+  if(pw.length<6){toast('Password needs 6+ chars');return;}
+  user={email:em,name:fn+' '+ln};setAv();toast('Welcome, '+fn+'!');closeM();
+  if(fromCO)setTimeout(showShipping,300);
+}
+
+function socialLogin(provider,fromCO){
+  user={email:provider.toLowerCase()+'@demo.com',name:provider+' User'};setAv();toast('Signed in with '+provider);closeM();
+  if(fromCO)setTimeout(showShipping,300);
+}
+
+function setAv(){
+  const av=document.getElementById('av');
+  av.textContent=user.name.slice(0,2).toUpperCase();
+  av.style.background='rgba(255,255,255,0.28)';
+  av.onclick=showProfile;
+}
+
+function showProfile(){
+  modal(`<div class="modal">
+    <div class="mh"><h3>My account</h3><button class="mx" onclick="closeM()">×</button></div>
+    <div class="mb">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:0.5px solid var(--color-border-tertiary)">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--sl);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;color:var(--s)">${user.name.slice(0,2).toUpperCase()}</div>
+        <div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">${user.name}</div><div style="font-size:11px;color:var(--color-text-secondary)">${user.email}</div></div>
+      </div>
+      <div class="spr"><span class="sk">Cart items</span><span class="sv">${cart.reduce((a,c)=>a+c.qty,0)}</span></div>
+      <div class="spr"><span class="sk">Wishlist</span><span class="sv">${wishlist.length} saved</span></div>
+      <div class="spr"><span class="sk">Promo code</span><span class="sv">${appliedCoupon||'None applied'}</span></div>
+      <div class="spr" style="border:none"><span class="sk">Member since</span><span class="sv">April 2026</span></div>
+    </div>
+    <div class="mf">
+      <button class="mp" onclick="showCart()">View cart</button>
+      <button class="ms" onclick="user=null;const av=document.getElementById('av');av.textContent='?';av.style.background='rgba(255,255,255,.22)';av.onclick=function(){showLogin()};closeM();toast('Signed out')">Sign out</button>
+    </div>
+  </div>`);
+}
+
+let shipD={};
+function showShipping(){
+  modal(`<div class="modal">
+    <div class="mh"><h3>Checkout — Shipping</h3><button class="mx" onclick="closeM()">×</button></div>
+    <div class="mb">
+      <div class="steps"><div class="step on"></div><div class="step"></div><div class="step"></div></div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:12px">Step 1 of 3 — Delivery address</div>
+      <div class="r2">
+        <div><label class="fl">First name</label><input class="fi" id="sfn" value="${user?user.name.split(' ')[0]:''}"/></div>
+        <div><label class="fl">Last name</label><input class="fi" id="sln" value="${user&&user.name.split(' ')[1]||''}"/></div>
+      </div>
+      <label class="fl">Address</label><input class="fi" id="sadr" placeholder="123 Main St"/>
+      <label class="fl">Apt / Suite (optional)</label><input class="fi" id="sadr2" placeholder="Apt 4B"/>
+      <div class="r2">
+        <div><label class="fl">City</label><input class="fi" id="scity" placeholder="New York"/></div>
+        <div><label class="fl">ZIP / PIN</label><input class="fi" id="szip" placeholder="10001"/></div>
+      </div>
+      <label class="fl">Country</label>
+      <select class="fi" id="sctry">
+        <option>United States</option><option>India</option><option>United Kingdom</option><option>Canada</option><option>Australia</option><option>Germany</option><option>France</option><option>Japan</option><option>South Korea</option><option>UAE</option><option>Singapore</option>
+      </select>
+      <label class="fl">Phone</label><input class="fi" id="sph" type="tel" placeholder="+1 555 000 0000"/>
+      <label style="font-size:10px;color:var(--color-text-secondary);display:flex;align-items:center;gap:5px"><input type="checkbox" checked style="width:12px;height:12px"/> Send tracking updates to ${user?user.email:'my email'}</label>
+    </div>
+    <div class="mf">
+      <button class="mp" onclick="doShip()">Continue to payment</button>
+      <button class="ms" onclick="showCart()">Back</button>
+    </div>
+  </div>`);
+}
+
+function doShip(){
+  const fn=document.getElementById('sfn').value,adr=document.getElementById('sadr').value,city=document.getElementById('scity').value,zip=document.getElementById('szip').value;
+  if(!fn||!adr||!city||!zip){toast('Fill all required fields');return;}
+  shipD={fn,ln:document.getElementById('sln').value,adr,city,zip,country:document.getElementById('sctry').value,phone:document.getElementById('sph').value};
+  showPay();
+}
+
+let payM='card';
+function showPay(){
+  const sub=cart.reduce((a,c)=>a+c.price*c.qty,0);
+  const ship=sub>499?0:15;
+  let disc=0;
+  if(appliedCoupon){const cp=COUPONS[appliedCoupon];disc=cp.type==='pct'?Math.round(sub*cp.val/100):Math.min(cp.val,sub);}
+  const total=sub+ship-disc;
+  modal(`<div class="modal">
+    <div class="mh"><h3>Checkout — Payment</h3><button class="mx" onclick="closeM()">×</button></div>
+    <div class="mb">
+      <div class="steps"><div class="step on"></div><div class="step on"></div><div class="step"></div></div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:12px">Step 2 of 3 — Payment</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px">
+        <span class="pi on" id="pi-card" onclick="selPay('card')">💳 Card</span>
+        <span class="pi" id="pi-paypal" onclick="selPay('paypal')">🅿️ PayPal</span>
+        <span class="pi" id="pi-apple" onclick="selPay('apple')">🍎 Apple Pay</span>
+        <span class="pi" id="pi-google" onclick="selPay('google')">🔵 Google Pay</span>
+        <span class="pi" id="pi-emi" onclick="selPay('emi')">📅 EMI</span>
+      </div>
+      <div id="card-f">
+        <label class="fl">Name on card</label><input class="fi" id="pcn" value="${user?user.name:''}" placeholder="Alex Kim"/>
+        <label class="fl">Card number</label><input class="fi" id="pcard" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)"/>
+        <div class="r2">
+          <div><label class="fl">Expiry</label><input class="fi" id="pexp" placeholder="MM/YY" maxlength="5" oninput="fmtExp(this)"/></div>
+          <div><label class="fl">CVV</label><input class="fi" id="pcvv" placeholder="•••" maxlength="4" type="password"/></div>
+        </div>
+        <label style="font-size:10px;color:var(--color-text-secondary);display:flex;align-items:center;gap:5px;margin-bottom:8px"><input type="checkbox" checked style="width:12px;height:12px"/> Save card for next time</label>
+      </div>
+      <div id="emi-f" style="display:none">
+        <label class="fl">Select EMI plan</label>
+        <select class="fi" style="margin-bottom:8px">
+          <option>3 months (0% interest) — $${Math.round(total/3)}/mo</option>
+          <option>6 months (0% interest) — $${Math.round(total/6)}/mo</option>
+          <option>12 months (5% interest) — $${Math.round(total*1.05/12)}/mo</option>
+          <option>24 months (8% interest) — $${Math.round(total*1.08/24)}/mo</option>
+        </select>
+        <label class="fl">Card number</label><input class="fi" id="ecard" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)"/>
+      </div>
+      <div id="alt-f" style="display:none;text-align:center;padding:16px;background:var(--color-background-secondary);border-radius:7px;font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">You'll be redirected to complete payment securely.</div>
+      <div style="background:var(--color-background-secondary);border-radius:7px;padding:9px 11px">
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Subtotal</span><span>$${sub.toLocaleString()}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Shipping</span><span style="color:${ship===0?'#3B6D11':'var(--color-text-primary)'}">${ship===0?'Free':'$'+ship}</span></div>
+        ${disc>0?`<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="color:#3B6D11">Discount</span><span style="color:#3B6D11">−$${disc}</span></div>`:''}
+        <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;border-top:0.5px solid var(--color-border-tertiary);padding-top:6px;margin-top:4px"><span>Total</span><span style="color:var(--s)">$${total.toLocaleString()}</span></div>
+      </div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin-top:7px;display:flex;align-items:center;gap:4px">🔒 Secured by 256-bit SSL encryption</div>
+    </div>
+    <div class="mf">
+      <button class="mp" onclick="doPay(${total})">Pay $${total.toLocaleString()}</button>
+      <button class="ms" onclick="showShipping()">Back</button>
+    </div>
+  </div>`);
+}
+
+function selPay(m){
+  payM=m;
+  ['card','paypal','apple','google','emi'].forEach(x=>{const el=document.getElementById('pi-'+x);if(el)el.classList.toggle('on',x===m);});
+  document.getElementById('card-f').style.display=m==='card'?'':'none';
+  const ef=document.getElementById('emi-f');if(ef)ef.style.display=m==='emi'?'':'none';
+  document.getElementById('alt-f').style.display=(m==='paypal'||m==='apple'||m==='google')?'':'none';
+}
+
+function fmtCard(el){let v=el.value.replace(/\D/g,'').slice(0,16);el.value=v.replace(/(.{4})/g,'$1 ').trim();}
+function fmtExp(el){let v=el.value.replace(/\D/g,'').slice(0,4);if(v.length>2)v=v.slice(0,2)+'/'+v.slice(2);el.value=v;}
+
+function doPay(total){
+  if(payM==='card'){
+    const card=(document.getElementById('pcard').value||'').replace(/\s/g,'');
+    const exp=document.getElementById('pexp').value;
+    const cvv=document.getElementById('pcvv').value;
+    const cn=document.getElementById('pcn').value;
+    if(!cn||card.length<16||!exp||cvv.length<3){toast('Fill all card details correctly');return;}
+  }
+  if(payM==='emi'){
+    const ec=(document.getElementById('ecard').value||'').replace(/\s/g,'');
+    if(ec.length<16){toast('Enter valid card number');return;}
+  }
+  const oid='SAM-'+Math.random().toString(36).slice(2,8).toUpperCase();
+  const items=cart.map(c=>`<div class="spr"><span class="sk">${c.name} ×${c.qty}</span><span class="sv">$${(c.price*c.qty).toLocaleString()}</span></div>`).join('');
+  const itemCnt=cart.reduce((a,c)=>a+c.qty,0);
+  modal(`<div class="modal">
+    <div class="mh"><h3>Order confirmed!</h3><button class="mx" onclick="closeM()">×</button></div>
+    <div class="mb">
+      <div class="steps"><div class="step on"></div><div class="step on"></div><div class="step on"></div></div>
+      <div style="text-align:center;padding:6px 0 14px">
+        <div style="font-size:42px;margin-bottom:8px">🎉</div>
+        <div style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px">Thank you, ${user?user.name.split(' ')[0]:''}!</div>
+        <div style="font-size:11px;color:var(--color-text-secondary)">Your Samsung order is confirmed.</div>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:8px;padding:10px 12px;margin-bottom:10px">
+        <div class="spr"><span class="sk">Order ID</span><span class="sv" style="color:var(--s);font-family:var(--font-mono)">${oid}</span></div>
+        <div class="spr"><span class="sk">Total paid</span><span class="sv">$${total.toLocaleString()}</span></div>
+        <div class="spr"><span class="sk">Payment</span><span class="sv">${{card:'Credit/Debit Card',paypal:'PayPal',apple:'Apple Pay',google:'Google Pay',emi:'EMI'}[payM]}</span></div>
+        <div class="spr"><span class="sk">Items</span><span class="sv">${itemCnt} item${itemCnt!==1?'s':''}</span></div>
+        <div class="spr"><span class="sk">Ship to</span><span class="sv">${shipD.city||'—'}, ${shipD.country||''}</span></div>
+        <div class="spr"><span class="sk">Delivery</span><span class="sv">3–5 business days</span></div>
+        <div class="spr" style="border:none"><span class="sk">Confirmation</span><span class="sv">${user?user.email:''}</span></div>
+      </div>
+      <div style="font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:5px">Order summary</div>
+      ${items}
+    </div>
+    <div class="mf"><button class="mp" onclick="cart=[];appliedCoupon=null;updCN();render();closeM();toast('Happy shopping with Samsung! 🎉')">Done</button><button class="ms" onclick="toast('Track order: '+oid);closeM()">Track order</button></div>
+  </div>`);
+}
+
+render();
+</script>
